@@ -15,7 +15,7 @@ int timeOf = 0;
 int timeNow = 0;
 int timeSince = 0;
 
-bool fire(bool a);
+//bool fire(bool a);
 void hit();
 
 void setup() {
@@ -53,20 +53,23 @@ void loop() {
 
   int threshold = 125;
  
-  if(digitalRead(button) == HIGH){
+  if(digitalRead(button) == HIGH){  //if button is pressed
     timeNow = millis();
-    if((timeNow - timeOf)>= 2000){
-      fire(0); //call fctn fire with successful param
+    timeSince = timeNow - timeOf; // time since last shot = now - last shot
+    if(timeSince >= 2000){ //if 2 seconds since last fire
+      fire(true); //call fctn fire with successful param 
     }
     else{
-      fire(1); //call ftcn w/ fail param
+      fire(false); //call ftcn w/ fail param
     }
   }
   else{
      digitalWrite(laser, LOW);
     }
+    
   if(reading > threshold){
-    //Oh no you got hit
+    //Oh no you got 
+    hit();
     }
   else{
     digitalWrite(led1, LOW);
@@ -75,19 +78,24 @@ void loop() {
   }
 }
 
-bool fire(bool a){
-  if(a == 0){
+void fire(bool a){
+  if(a == true){
     //make noise of shooting
+    tone(speaker,400,300);
     digitalWrite(laser, HIGH);
-    delay(25);
+    delay(300);
     digitalWrite(laser, LOW);
     timeOf = millis();
   }
   else{
     //Make sad noise
+    tone(speaker, 123, 1230);
+    //tone(speaker, 100, 1230);
+    //tone(speaker, 80, 1230);
     digitalWrite(led1, HIGH);
     delay(500);
     digitalWrite(led1, LOW);
+    
   }
 }
 
