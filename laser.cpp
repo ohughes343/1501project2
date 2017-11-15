@@ -1,5 +1,7 @@
-const int laser = 3;
-const int button = 7;
+const int machine = 3;
+const int missle = 4;
+const int machinebutton = 6;
+const int misslebutton = 7;
 const int speaker = 8;
 const int led1 = 9;
 const int led2 = 10;
@@ -19,8 +21,10 @@ int timeSince = 0;
 void hit();
 
 void setup() {
-  pinMode(laser, OUTPUT);
-  pinMode(button, INPUT);
+  pinMode(machine, OUTPUT);
+  pinMode(missle, OUTPUT);
+  pinMode(machinebutton, INPUT);
+  pinMode(misslebutton, INPUT);
   pinMode(speaker, OUTPUT);
   pinMode(sensor, INPUT);
   pinMode(led1, OUTPUT);
@@ -53,22 +57,29 @@ void loop() {
 
   int threshold = 125;
  
-  if(digitalRead(button) == HIGH){  //if button is pressed
+  if(digitalRead(misslebutton) == HIGH){  //if missle button is pressed
     timeNow = millis();
     timeSince = timeNow - timeOf; // time since last shot = now - last shot
     if(timeSince >= 2000){ //if 2 seconds since last fire
-      fire(true); //call fctn fire with successful param 
+      fireMissle(true); //call fctn fire with successful param 
     }
     else{
-      fire(false); //call ftcn w/ fail param
+      fireMissle(false); //call ftcn w/ fail param
     }
   }
   else{
-     digitalWrite(laser, LOW);
+     digitalWrite(machine, LOW);
+    }
+
+  if(digitalRead(machinebutton) == HIGH){ //if machine gun is fired
+     fireMachine(true);
+  }
+  else{
+     fireMachine(false);
     }
     
   if(reading > threshold){
-    //Oh no you got 
+    //Oh no you got hit
     hit();
     }
   else{
@@ -78,15 +89,30 @@ void loop() {
   }
 }
 
-void fire(bool a){
+void fireMachine(bool a){
   if(a == true){
     //make noise of shooting
-    tone(speaker,400,300);
-    digitalWrite(laser, HIGH);
+    tone(speaker,400,30);
+    digitalWrite(machine, HIGH);
     delay(300);
-    digitalWrite(laser, LOW);
-    timeOf = millis();
+    digitalWrite(machine, LOW);
+    delay(300);
+    
   }
+  else{
+    digitalWrite(machine, LOW);
+    }
+  
+}
+
+void fireMissle(bool a){
+  if(a == true){
+    tone(speaker, 100, 300);
+    digitalWrite(missle, HIGH);
+    delay(300);
+    digitalWrite(missle, LOW);
+    timeOf = millis();
+    }
   else{
     //Make sad noise
     tone(speaker, 123, 1230);
