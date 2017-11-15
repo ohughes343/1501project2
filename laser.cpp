@@ -48,7 +48,7 @@ void setup() {
     digitalWrite(led3, LOW);
 }
 
-void loop() {
+ static void loop() {
   sensorValue = analogRead(sensor);
   sensorValue = map(sensorValue, sensorMin, sensorMax, 0, 255); //apply calibration to sensor         map(value, fromLow, fromHigh, toLow, toHigh)
   sensorValue = constrain(sensorValue, 0, 255); //in case range is outside 0-255
@@ -62,8 +62,17 @@ void loop() {
     timeSince = timeNow - timeOf; // time since last shot = now - last shot
     if(timeSince >= 2000){ //if 2 seconds since last fire
       fireMissle(true); //call fctn fire with successful param 
-    }
-    else{
+    
+    digitalWrite(led1, HIGH); //cooldown sequence for missle
+    digitalWrite(led2, HIGH);
+    digitalWrite(led3, HIGH);
+    delay(500);
+    digitalWrite(led3, LOW);
+    delay(500);
+    digitalWrite(led2, LOW);
+    delay(500);
+    digitalWrite(led1, LOW);
+    }else{
       fireMissle(false); //call ftcn w/ fail param
     }
   }
@@ -109,7 +118,7 @@ void fireMissle(bool a){
   if(a == true){
     tone(speaker, 100, 300);
     digitalWrite(missle, HIGH);
-    delay(300);
+    delay(400);
     digitalWrite(missle, LOW);
     timeOf = millis();
     }
@@ -118,15 +127,7 @@ void fireMissle(bool a){
     tone(speaker, 123, 1230);
     //tone(speaker, 100, 1230);
     //tone(speaker, 80, 1230);
-    digitalWrite(led1, HIGH); //cooldown sequence for missle
-    digitalWrite(led2, HIGH);
-    digitalWrite(led3, HIGH);
-    delay(500);
-    digitalWrite(led3, LOW);
-    delay(500);
-    digitalWrite(led2, LOW);
-    delay(500);
-    digitalWrite(led1, LOW);
+   
   }
 }
 
