@@ -55,7 +55,7 @@ void loop() {
 
   int reading = sensorValue; //take data from light sensor
 
-  int threshold = 125;
+  int threshold = 140;
  
   if(digitalRead(misslebutton) == HIGH){  //if missle button is pressed
     timeNow = millis();
@@ -118,10 +118,15 @@ void fireMissle(bool a){
     tone(speaker, 123, 1230);
     //tone(speaker, 100, 1230);
     //tone(speaker, 80, 1230);
-    digitalWrite(led1, HIGH);
+    digitalWrite(led1, HIGH); //cooldown sequence for missle
+    digitalWrite(led2, HIGH);
+    digitalWrite(led3, HIGH);
+    delay(500);
+    digitalWrite(led3, LOW);
+    delay(500);
+    digitalWrite(led2, LOW);
     delay(500);
     digitalWrite(led1, LOW);
-    
   }
 }
 
@@ -130,9 +135,11 @@ void hit(){
   for(int i = 0; i < 10; i++){
     digitalWrite(led1, HIGH);
     digitalWrite(led2, HIGH);
+    digitalWrite(led3, HIGH);
     delay(100);
     digitalWrite(led1, LOW);
     digitalWrite(led2, LOW);
+    digitalWrite(led3, LOW);
     delay(100);
   }
 }
