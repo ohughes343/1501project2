@@ -1,0 +1,116 @@
+[code]
+//PIN SETTINGS
+const int button1; //head button 
+const int button2; //body button
+const int rightDrive; //right drivetrain motor
+const int leftDrive; //left drivetrain motor
+const int sensor; //IR sensor
+const int rightArm; //right arm motor
+const int rightFire; //right arm complete action
+const int leftFire; //left arm complete action
+const int input; //controller input
+ 
+//VARS
+const int rightTimer = 750; //millisecond timer for right arm action
+const int leftTimer = 750; //millisecond timer for left arm action
+const int deathTimer = 1500; //millisecond death timer
+const int sensorRefresh = 100; //millisecond sensor refresh rate
+  
+int runState = 1;
+int timeRight;
+int timeLeft;
+int timeDeath;
+int timeSensor;
+
+bool dead = false;
+bool runLeft = false;
+bool runRight = false;
+
+void happy();
+
+void setup() {
+  // put your setup code here, to run once:
+  //OUTPUTS
+  pinMode(rightDrive, OUTPUT);
+  pinMode(leftDrive, OUTPUT);
+  pinMode(rightArm, OUTPUT);
+  pinMode(rightFire, OUTPUT);
+  pinMode(leftFire, OUTPUT);
+    //INPUTS
+  pinMode(button1, INPUT);
+  pinMode(button2, INPUT);
+  pinMode(sensor, INPUT);
+   
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  switch(runState){
+    case 1:
+      //get information from controller
+    case 2:
+      //if dead != true, move
+    case 3:
+     if(button1 == HIGH || button2 == HIGH){
+      timeDeath = millis();
+      //play sad sounds
+      dead = true;
+     }
+    case 4:
+     if(millis() - timeDeath < deathTimer){
+      //nothing happens
+      return;
+     }
+    case 5:
+     if(millis() - timeDeath >= deathTimer){
+      happy()
+     }
+     //Play happy music
+     dead = false;
+    case 6:
+     //if right arm, runRight != true, run right arm function
+     if(runRight != true){
+      //run right arm function
+      millis() = timeRight;
+      runRight = true;
+     }
+    case 7:
+     if(millis() - timeRight < rightTimer){
+      //nothing happens
+      return;
+     }
+    case 8:
+      //if left arm, runLeft != true, run left arm function
+     if(runLeft != true){
+      //run left arm function
+      millis() = timeLeft;
+      runLeft = true;
+     }
+    case 9:
+     if(millis() - timeLeft < leftTimer){
+      //nothing happens
+      return;
+  }
+}
+
+void happy(){
+  //play happy music
+}
+
+void sad(){
+  //play sad music
+}
+
+void shoot(){
+  //play shooting sounds
+}
+
+void punch(){
+  //play punching sounds
+}
+
+void hammer(){
+ //play hammer sounds
+}
+
+[/code]
