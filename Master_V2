@@ -22,6 +22,8 @@ int timeLeft;
 int timeDeath;
 int timeSensor;
 
+int lives; //maybe set to 3, down one every death?
+
 bool dead = false;
 bool runLeft = false;
 bool runRight = false;
